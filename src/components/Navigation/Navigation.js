@@ -1,4 +1,5 @@
 import { Navbar, Nav } from 'react-bootstrap';
+import { NavLink } from 'react-router-dom';
 
 function Navigation() {
   return (
@@ -7,10 +8,12 @@ function Navigation() {
         T M D B
       </Navbar.Brand>
       <Nav className="mr-auto">
-        <Nav.Link href="/" exact="true">
+        <NavLink to="/" exact="true" className="mainLink">
           Home
-        </Nav.Link>
-        <Nav.Link href="/movies">Movies</Nav.Link>
+        </NavLink>
+        <NavLink to="/movies" className="mainLink">
+          Movies
+        </NavLink>
       </Nav>
     </Navbar>
   );
