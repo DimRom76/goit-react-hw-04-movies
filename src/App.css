@@ -1,0 +1,16 @@
+.App {
+  text-align: center;
+  max-width: 900px;
+  margin: 0 auto;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.addInformation,
+.alignLeft {
+  text-align: left;
+}
+
+.buttonBack {
+  border: 0;
+}
