@@ -8,18 +8,11 @@ import apiData from '../service/apiData';
 
 import CreditsView from './CreditsViews';
 import ReviewsView from './ReviewsViews';
-import { useEffect, useState } from 'react';
 
 export default function MovieView() {
-  const [backPage, setBackPage] = useState('');
   const { idMovie } = useParams();
   const location = useLocation();
-
-  useEffect(() => {
-    if (location.state) {
-      setBackPage(location.state.backPage);
-    }
-  }, [location]);
+  const backPage = location?.state?.backPage ?? '/';
 
   const { isLoading, error, data } = useQuery(
     ['movieId', idMovie],
@@ -46,6 +39,7 @@ export default function MovieView() {
     <div>
       <div className="alignLeft">
         <Link to={backPage}>{'<- Назад'}</Link>
+        {/* можно сделать через кнопку (onClick) и использовать History */}
       </div>
       <div className="card mb-3">
         <div className="row no-gutters">
@@ -76,10 +70,24 @@ export default function MovieView() {
         <p>Дополнительная информация</p>
         <ul>
           <li>
-            <NavLink to={`/movies/${id}/credits`}>В главных ролях</NavLink>
+            <NavLink
+              to={{
+                pathname: `/movies/${id}/credits`,
+                state: { backPage },
+              }}
+            >
+              В главных ролях
+            </NavLink>
           </li>
           <li>
-            <NavLink to={`/movies/${id}/reviews`}>Обзоры</NavLink>
+            <NavLink
+              to={{
+                pathname: `/movies/${id}/reviews`,
+                state: { backPage },
+              }}
+            >
+              Обзоры
+            </NavLink>
           </li>
         </ul>
         <hr />
