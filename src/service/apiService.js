@@ -5,7 +5,11 @@ const MAIN_URL = 'https://api.themoviedb.org/3/';
 // ЖАНРЫ;
 // https://api.themoviedb.org/3/genre/movie/list?api_key=fb4eca5dd3545235e4fd6796c70d4d40
 
-const fetchTrending = async () => {
+//api.themoviedb.org/3/discover/movie?api_key=fb4eca5dd3545235e4fd6796c70d4d40&language=en-US&sort_by=popularity.desc&with_genres=Western&page=1
+//api.themoviedb.org/3/discover/movie?api_key=fb4eca5dd3545235e4fd6796c70d4d40&language=en-US&with_genres=14&sort_by=popularity.desc
+//http://api.themoviedb.org/3/discover/movie?api_key=fb4eca5dd3545235e4fd6796c70d4d40&language=en-US&with_genres=14,1&query=bat
+
+http: https: const fetchTrending = async () => {
   const res = await fetch(`${MAIN_URL}trending/movie/day${API_KEY}${LANGUAGE}`);
   if (!res.ok) {
     throw new Error('Network response was not ok');
