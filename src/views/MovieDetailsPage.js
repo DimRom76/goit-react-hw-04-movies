@@ -8,6 +8,7 @@ import apiData from '../service/apiData';
 
 import CreditsView from './CreditsViews';
 import ReviewsView from './ReviewsViews';
+import VideosView from './VideosViews';
 
 export default function MovieView() {
   const { idMovie } = useParams();
@@ -89,10 +90,21 @@ export default function MovieView() {
               Обзоры
             </NavLink>
           </li>
+          <li>
+            <NavLink
+              to={{
+                pathname: `/movies/${id}/videos`,
+                state: { backPage },
+              }}
+            >
+              Трейлеры
+            </NavLink>
+          </li>
         </ul>
         <hr />
         <Route path="/movies/:idMovie/credits" component={CreditsView} />
         <Route path="/movies/:idMovie/reviews" component={ReviewsView} />
+        <Route path="/movies/:idMovie/videos" component={VideosView} />
       </div>
     </div>
   );

@@ -9,7 +9,14 @@ const MAIN_URL = 'https://api.themoviedb.org/3/';
 //api.themoviedb.org/3/discover/movie?api_key=fb4eca5dd3545235e4fd6796c70d4d40&language=en-US&with_genres=14&sort_by=popularity.desc
 //http://api.themoviedb.org/3/discover/movie?api_key=fb4eca5dd3545235e4fd6796c70d4d40&language=en-US&with_genres=14,1&query=bat
 
-http: https: const fetchTrending = async () => {
+// получить сразу и видео и картинки к фильму
+// https://api.themoviedb.org/3/movie/157336?api_key=fb4eca5dd3545235e4fd6796c70d4d40&append_to_response=videos,images
+
+//ссылка на картинку
+//'https://image.tmdb.org/t/p/w500/путь'
+//если нет картинки надо чтото поставить!!!!!
+
+const fetchTrending = async () => {
   const res = await fetch(`${MAIN_URL}trending/movie/day${API_KEY}${LANGUAGE}`);
   if (!res.ok) {
     throw new Error('Network response was not ok');
@@ -34,6 +41,15 @@ const fetchSearchMovie = async ({ queryKey }) => {
 const fetchMovieId = async ({ queryKey }) => {
   const id = queryKey[1];
   const res = await fetch(`${MAIN_URL}movie/${id}${API_KEY}${LANGUAGE}`);
+  if (!res.ok) {
+    throw new Error('Network response was not ok');
+  }
+  return res.json();
+};
+
+const fetchVideosId = async ({ queryKey }) => {
+  const id = queryKey[1];
+  const res = await fetch(`${MAIN_URL}movie/${id}/videos${API_KEY}${LANGUAGE}`);
   if (!res.ok) {
     throw new Error('Network response was not ok');
   }
@@ -68,6 +84,7 @@ const fetchApi = {
   fetchCreditsId,
   fetchReviewsId,
   fetchSearchMovie,
+  fetchVideosId,
 };
 
 export default fetchApi;

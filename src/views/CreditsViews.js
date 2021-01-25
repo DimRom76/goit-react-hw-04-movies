@@ -5,7 +5,7 @@ import Loader from '../components/Loader';
 
 import fetchApi from '../service/apiService';
 
-export default function MovieView() {
+export default function CreditsView() {
   const { idMovie } = useParams();
 
   const { isLoading, error, data } = useQuery(

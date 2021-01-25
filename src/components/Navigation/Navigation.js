@@ -8,7 +8,7 @@ function Navigation() {
         T M D B
       </Navbar.Brand>
       <Nav className="mr-auto">
-        <NavLink to="/" exact="true" className="mainLink">
+        <NavLink to="/" exact className="mainLink">
           Home
         </NavLink>
         <NavLink to="/movies" className="mainLink">
