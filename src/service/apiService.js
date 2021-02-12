@@ -17,7 +17,15 @@ const MAIN_URL = 'https://api.themoviedb.org/3/';
 //если нет картинки надо чтото поставить!!!!!
 
 const fetchTrending = async () => {
-  const res = await fetch(`${MAIN_URL}trending/movie/day${API_KEY}${LANGUAGE}`);
+  const res = await fetch(`${MAIN_URL}movie/popular${API_KEY}${LANGUAGE}`);
+  if (!res.ok) {
+    throw new Error('Network response was not ok');
+  }
+  return res.json();
+};
+
+const fetchGanres = async () => {
+  const res = await fetch(`${MAIN_URL}genre/movie/list${API_KEY}${LANGUAGE}`);
   if (!res.ok) {
     throw new Error('Network response was not ok');
   }
@@ -40,26 +48,8 @@ const fetchSearchMovie = async ({ queryKey }) => {
 
 const fetchMovieId = async ({ queryKey }) => {
   const id = queryKey[1];
-  const res = await fetch(`${MAIN_URL}movie/${id}${API_KEY}${LANGUAGE}`);
-  if (!res.ok) {
-    throw new Error('Network response was not ok');
-  }
-  return res.json();
-};
-
-const fetchVideosId = async ({ queryKey }) => {
-  const id = queryKey[1];
-  const res = await fetch(`${MAIN_URL}movie/${id}/videos${API_KEY}${LANGUAGE}`);
-  if (!res.ok) {
-    throw new Error('Network response was not ok');
-  }
-  return res.json();
-};
-
-const fetchCreditsId = async ({ queryKey }) => {
-  const id = queryKey[1];
   const res = await fetch(
-    `${MAIN_URL}movie/${id}/credits${API_KEY}${LANGUAGE}`,
+    `${MAIN_URL}movie/${id}${API_KEY}${LANGUAGE}&append_to_response=videos,reviews,credits`,
   );
   if (!res.ok) {
     throw new Error('Network response was not ok');
@@ -67,24 +57,58 @@ const fetchCreditsId = async ({ queryKey }) => {
   return res.json();
 };
 
-const fetchReviewsId = async ({ queryKey }) => {
-  const id = queryKey[1];
+const fetchMovieByGenres = async ({ queryKey }) => {
+  const genreId = queryKey[1];
+  // ganres - список id жанров через запятую без пробелов
   const res = await fetch(
-    `${MAIN_URL}movie/${id}/reviews${API_KEY}${LANGUAGE}`,
+    `${MAIN_URL}discover/movie${API_KEY}${LANGUAGE}&with_genres=${genreId}`,
   );
   if (!res.ok) {
     throw new Error('Network response was not ok');
   }
   return res.json();
 };
+
+// const fetchVideosId = async ({ queryKey }) => {
+//   const id = queryKey[1];
+//   const res = await fetch(`${MAIN_URL}movie/${id}/videos${API_KEY}${LANGUAGE}`);
+//   if (!res.ok) {
+//     throw new Error('Network response was not ok');
+//   }
+//   return res.json();
+// };
+
+// const fetchCreditsId = async ({ queryKey }) => {
+//   const id = queryKey[1];
+//   const res = await fetch(
+//     `${MAIN_URL}movie/${id}/credits${API_KEY}${LANGUAGE}`,
+//   );
+//   if (!res.ok) {
+//     throw new Error('Network response was not ok');
+//   }
+//   return res.json();
+// };
+
+// const fetchReviewsId = async ({ queryKey }) => {
+//   const id = queryKey[1];
+//   const res = await fetch(
+//     `${MAIN_URL}movie/${id}/reviews${API_KEY}${LANGUAGE}`,
+//   );
+//   if (!res.ok) {
+//     throw new Error('Network response was not ok');
+//   }
+//   return res.json();
+// };
 
 const fetchApi = {
   fetchTrending,
   fetchMovieId,
-  fetchCreditsId,
-  fetchReviewsId,
+  // fetchCreditsId,
+  // fetchReviewsId,
+  // fetchVideosId,
   fetchSearchMovie,
-  fetchVideosId,
+  fetchGanres,
+  fetchMovieByGenres,
 };
 
 export default fetchApi;

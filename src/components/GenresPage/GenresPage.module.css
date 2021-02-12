@@ -1,0 +1,14 @@
+.container__genres {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.item__genres {
+  margin-right: 50px;
+}
+
+.active__link {
+  color: blue;
+  text-decoration: underline;
+}

@@ -1,44 +1,50 @@
-import { useQuery } from 'react-query';
-import { useParams } from 'react-router-dom';
+// import { useQuery } from 'react-query';
+// import { useParams } from 'react-router-dom';
 
-import Loader from '../components/Loader';
+// import Loader from '../components/Loader';
 
-import fetchApi from '../service/apiService';
+// import fetchApi from '../service/apiService';
 
-export default function VideosView() {
-  const { idMovie } = useParams();
+const StyleLi = { listStyle: 'none' };
 
-  const { isLoading, error, data } = useQuery(
-    ['movieIdVideoss', idMovie],
-    fetchApi.fetchVideosId,
-  );
+export default function VideosView({ data }) {
+  // const { idMovie } = useParams();
 
-  if (isLoading) return <Loader />;
+  // const { isLoading, error, data } = useQuery(
+  //   ['movieIdVideoss', idMovie],
+  //   fetchApi.fetchVideosId,
+  // );
 
-  if (error) return 'An error has occurred: ' + error.message;
+  // if (isLoading) return <Loader />;
+
+  // if (error) return 'An error has occurred: ' + error.message;
+
+  if (data.results.length === 0) return <div>Трейлеров еще нет</div>;
 
   const result = data.results;
 
   return (
     <div>
-      <ul>
-        video list
-        {result.map(({ key }) => (
-          <li key={key}>
-            {key && (
-              <iframe
-                id="ytplayer"
-                type="text/html"
-                width="640"
-                height="360"
-                src={`http://www.youtube.com/embed/${key}`}
-                frameBorder="0"
-                allowFullScreen
-              />
-            )}
-          </li>
-        ))}
-      </ul>
+      <center>
+        <ul>
+          {result.map(({ key, name }) => (
+            <li key={key} style={StyleLi}>
+              {key && (
+                <iframe
+                  title={name}
+                  id="ytplayer"
+                  type="text/html"
+                  width="640"
+                  height="360"
+                  src={`https://www.youtube.com/embed/${key}`}
+                  frameBorder="0"
+                  allowFullScreen
+                />
+              )}
+            </li>
+          ))}
+        </ul>
+      </center>
     </div>
   );
 }

@@ -4,9 +4,6 @@ import { lazy, Suspense } from 'react';
 
 import Navigation from './components/Navigation';
 import Loader from './components/Loader';
-// import MoviesPage from './components/MoviesPage';
-// import HomePage from './components/HomePage';
-// import MovieView from './views/MovieDetailsPage';
 
 import './App.css';
 
@@ -23,6 +20,11 @@ const HomePage = lazy(() =>
 const MovieView = lazy(() =>
   import('./views/MovieDetailsPage.js' /* webpackChunkName: "movie-view" */),
 );
+const GenresPage = lazy(() =>
+  import(
+    './components/GenresPage/GenresPage.js' /* webpackChunkName: "genres-page" */
+  ),
+);
 
 const queryClient = new QueryClient();
 
@@ -34,6 +36,7 @@ const App = () => (
         <Switch>
           <Route path="/" component={HomePage} exact />
           <Route path="/movies" component={MoviesPage} exact />
+          <Route path="/genres" component={GenresPage} />
           <Route path="/movies/:idMovie" component={MovieView} />
           <Route render={() => <h1>Page not found</h1>} />
         </Switch>

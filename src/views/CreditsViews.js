@@ -1,23 +1,23 @@
-import { useQuery } from 'react-query';
-import { useParams } from 'react-router-dom';
+// import { useQuery } from 'react-query';
+// import { useParams } from 'react-router-dom';
 
-import Loader from '../components/Loader';
+// import Loader from '../components/Loader';
 
-import fetchApi from '../service/apiService';
+// import fetchApi from '../service/apiService';
 
-export default function CreditsView() {
-  const { idMovie } = useParams();
+export default function CreditsView({ credits }) {
+  //Если не передавать данніе пропсом а идти за ними на сервер
+  //const { idMovie } = useParams();
+  // const { isLoading, error, data } = useQuery(
+  //   ['movieIdCredits', idMovie],
+  //   fetchApi.fetchCreditsId,
+  // );
 
-  const { isLoading, error, data } = useQuery(
-    ['movieIdCredits', idMovie],
-    fetchApi.fetchCreditsId,
-  );
+  // if (isLoading) return <Loader />;
 
-  if (isLoading) return <Loader />;
+  // if (error) return 'An error has occurred: ' + error.message;
 
-  if (error) return 'An error has occurred: ' + error.message;
-
-  const cast = data.cast;
+  const cast = credits.cast;
 
   return (
     <div>

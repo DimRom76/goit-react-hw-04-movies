@@ -1,5 +1,12 @@
 import { useQuery } from 'react-query';
-import { useParams, NavLink, Route, useLocation, Link } from 'react-router-dom';
+import {
+  useParams,
+  NavLink,
+  Route,
+  useLocation,
+  Link,
+  useRouteMatch,
+} from 'react-router-dom';
 
 import Loader from '../components/Loader';
 
@@ -13,6 +20,7 @@ import VideosView from './VideosViews';
 export default function MovieView() {
   const { idMovie } = useParams();
   const location = useLocation();
+  const match = useRouteMatch();
   const backPage = location?.state?.backPage ?? '/';
 
   const { isLoading, error, data } = useQuery(
@@ -26,14 +34,17 @@ export default function MovieView() {
 
   const {
     title,
-    id,
     original_title,
     genres,
     release_date,
     poster_path,
     vote_average,
     overview,
+    credits,
+    reviews,
+    videos,
   } = data;
+
   const genresList = apiData.getGenres(genres);
 
   return (
@@ -73,7 +84,7 @@ export default function MovieView() {
           <li>
             <NavLink
               to={{
-                pathname: `/movies/${id}/credits`,
+                pathname: `${match.url}/credits`,
                 state: { backPage },
               }}
             >
@@ -83,7 +94,7 @@ export default function MovieView() {
           <li>
             <NavLink
               to={{
-                pathname: `/movies/${id}/reviews`,
+                pathname: `${match.url}/reviews`,
                 state: { backPage },
               }}
             >
@@ -93,7 +104,7 @@ export default function MovieView() {
           <li>
             <NavLink
               to={{
-                pathname: `/movies/${id}/videos`,
+                pathname: `${match.url}/videos`,
                 state: { backPage },
               }}
             >
@@ -102,9 +113,21 @@ export default function MovieView() {
           </li>
         </ul>
         <hr />
-        <Route path="/movies/:idMovie/credits" component={CreditsView} />
-        <Route path="/movies/:idMovie/reviews" component={ReviewsView} />
-        <Route path="/movies/:idMovie/videos" component={VideosView} />
+        <Route
+          path={`${match.path}/credits`}
+          render={props => <CreditsView {...props} credits={credits} />}
+          //component={CreditsView}
+        />
+        <Route
+          path={`${match.path}/reviews`}
+          render={props => <ReviewsView {...props} data={reviews} />}
+          //component={ReviewsView}
+        />
+        <Route
+          path={`${match.path}/videos`}
+          render={props => <VideosView {...props} data={videos} />}
+          //component={VideosView}
+        />
       </div>
     </div>
   );

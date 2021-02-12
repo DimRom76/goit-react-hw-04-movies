@@ -14,6 +14,9 @@ function Navigation() {
         <NavLink to="/movies" className="mainLink">
           Movies
         </NavLink>
+        <NavLink to="/genres" className="mainLink">
+          Genres
+        </NavLink>
       </Nav>
     </Navbar>
   );
