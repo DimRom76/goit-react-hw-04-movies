@@ -1,9 +1,12 @@
 import { ListGroup, ListGroupItem } from 'react-bootstrap';
+import { useContext } from 'react';
+
 import { NavLink } from 'react-router-dom';
-//import { useRouteMatch } from 'react-router-dom';
 import apiData from '../service/apiData';
+import LanguageContext from '../service/LanguageContext';
 
 export default function MoviesListView({ data, backPage }) {
+  const languageRu = useContext(LanguageContext);
   return (
     <ListGroup>
       {data.map(movie => (
@@ -14,7 +17,7 @@ export default function MoviesListView({ data, backPage }) {
               state: { backPage },
             }}
           >
-            {movie.title} / {movie.original_title} (
+            {movie.title} {languageRu && ` / ${movie.original_title}`} (
             {apiData.getYear(movie.release_date)})
           </NavLink>
         </ListGroupItem>

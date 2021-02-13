@@ -1,14 +1,16 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useQuery } from 'react-query';
 import { useHistory, useLocation } from 'react-router-dom';
 
 import fetchApi from '../../service/apiService';
+import LanguageContext from '../../service/LanguageContext';
 import Loader from '../../components/Loader';
 import MoviesListViews from '../../views/MoviesListViews';
 
 import s from './MoviesPage.module.css';
 
 const MoviesPage = () => {
+  const languageRu = useContext(LanguageContext);
   const history = useHistory();
   const location = useLocation();
 
@@ -34,7 +36,7 @@ const MoviesPage = () => {
   }
 
   const { isLoading, error, data } = useQuery(
-    ['movieSelect', query],
+    ['movieSelect', languageRu, query],
     fetchApi.fetchSearchMovie,
   );
 

@@ -7,24 +7,27 @@ import {
   Link,
   useRouteMatch,
 } from 'react-router-dom';
+import { useContext } from 'react';
 
 import Loader from '../components/Loader';
 
 import fetchApi from '../service/apiService';
 import apiData from '../service/apiData';
+import LanguageContext from '../service/LanguageContext';
 
 import CreditsView from './CreditsViews';
 import ReviewsView from './ReviewsViews';
 import VideosView from './VideosViews';
 
 export default function MovieView() {
+  const languageRu = useContext(LanguageContext);
   const { idMovie } = useParams();
   const location = useLocation();
   const match = useRouteMatch();
   const backPage = location?.state?.backPage ?? '/';
 
   const { isLoading, error, data } = useQuery(
-    ['movieId', idMovie],
+    ['movieId', languageRu, idMovie],
     fetchApi.fetchMovieId,
   );
 

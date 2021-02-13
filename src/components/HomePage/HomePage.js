@@ -1,13 +1,17 @@
 import { useQuery } from 'react-query';
 import { useLocation } from 'react-router-dom';
+import { useContext } from 'react';
 
 import Loader from '../Loader';
 import fetchApi from '../../service/apiService';
+import LanguageContext from '../../service/LanguageContext';
 import MoviesListViews from '../../views/MoviesListViews';
 
 const MoviesPage = () => {
+  const languageRu = useContext(LanguageContext);
+
   const { isLoading, error, data } = useQuery(
-    ['trending'],
+    ['trending', languageRu],
     fetchApi.fetchTrending,
   );
 

@@ -18,6 +18,7 @@ export default function CreditsView({ credits }) {
   // if (error) return 'An error has occurred: ' + error.message;
 
   const cast = credits.cast;
+  if (cast.length === 0) return <div>No actors</div>;
 
   return (
     <div>

@@ -1,9 +1,10 @@
 import { Route, Switch } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, useState } from 'react';
 
 import Navigation from './components/Navigation';
 import Loader from './components/Loader';
+import LanguageContext from './service/LanguageContext';
 
 import './App.css';
 
@@ -28,21 +29,27 @@ const GenresPage = lazy(() =>
 
 const queryClient = new QueryClient();
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <div className="App">
-      <Navigation />
-      <Suspense fallback={<Loader />}>
-        <Switch>
-          <Route path="/" component={HomePage} exact />
-          <Route path="/movies" component={MoviesPage} exact />
-          <Route path="/genres" component={GenresPage} />
-          <Route path="/movies/:idMovie" component={MovieView} />
-          <Route render={() => <h1>Page not found</h1>} />
-        </Switch>
-      </Suspense>
-    </div>
-  </QueryClientProvider>
-);
+const App = () => {
+  const [languageRu, setlanguageRu] = useState(true);
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      <LanguageContext.Provider value={languageRu}>
+        <div className="App">
+          <Navigation languageRu={languageRu} setlanguageRu={setlanguageRu} />
+          <Suspense fallback={<Loader />}>
+            <Switch>
+              <Route path="/" component={HomePage} exact />
+              <Route path="/movies" component={MoviesPage} exact />
+              <Route path="/genres" component={GenresPage} />
+              <Route path="/movies/:idMovie" component={MovieView} />
+              <Route render={() => <h1>Page not found</h1>} />
+            </Switch>
+          </Suspense>
+        </div>
+      </LanguageContext.Provider>
+    </QueryClientProvider>
+  );
+};
 
 export default App;

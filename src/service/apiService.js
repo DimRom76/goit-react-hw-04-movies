@@ -1,5 +1,5 @@
 const API_KEY = '?api_key=fb4eca5dd3545235e4fd6796c70d4d40';
-const LANGUAGE = '&language=ru-RU';
+// const LANGUAGE = '&language=ru-RU';
 const MAIN_URL = 'https://api.themoviedb.org/3/';
 // https://api.themoviedb.org/3/trending/movie/day?api_key=fb4eca5dd3545235e4fd6796c70d4d40
 // ЖАНРЫ;
@@ -16,16 +16,19 @@ const MAIN_URL = 'https://api.themoviedb.org/3/';
 //'https://image.tmdb.org/t/p/w500/путь'
 //если нет картинки надо чтото поставить!!!!!
 
-const fetchTrending = async () => {
-  const res = await fetch(`${MAIN_URL}movie/popular${API_KEY}${LANGUAGE}`);
+const fetchTrending = async ({ queryKey }) => {
+  const language = `&language=${queryKey[1] ? 'ru-RU' : 'en-EN'}`;
+
+  const res = await fetch(`${MAIN_URL}movie/popular${API_KEY}${language}`);
   if (!res.ok) {
     throw new Error('Network response was not ok');
   }
   return res.json();
 };
 
-const fetchGanres = async () => {
-  const res = await fetch(`${MAIN_URL}genre/movie/list${API_KEY}${LANGUAGE}`);
+const fetchGanres = async ({ queryKey }) => {
+  const language = `&language=${queryKey[1] ? 'ru-RU' : 'en-EN'}`;
+  const res = await fetch(`${MAIN_URL}genre/movie/list${API_KEY}${language}`);
   if (!res.ok) {
     throw new Error('Network response was not ok');
   }
@@ -33,12 +36,13 @@ const fetchGanres = async () => {
 };
 
 const fetchSearchMovie = async ({ queryKey }) => {
-  const query = queryKey[1];
+  const language = `&language=${queryKey[1] ? 'ru-RU' : 'en-EN'}`;
+  const query = queryKey[2];
   if (query === '') {
     return '';
   }
   const res = await fetch(
-    `${MAIN_URL}search/movie${API_KEY}${LANGUAGE}&query=${query}`,
+    `${MAIN_URL}search/movie${API_KEY}${language}&query=${query}`,
   );
   if (!res.ok) {
     throw new Error('Network response was not ok');
@@ -47,9 +51,10 @@ const fetchSearchMovie = async ({ queryKey }) => {
 };
 
 const fetchMovieId = async ({ queryKey }) => {
-  const id = queryKey[1];
+  const language = `&language=${queryKey[1] ? 'ru-RU' : 'en-EN'}`;
+  const id = queryKey[2];
   const res = await fetch(
-    `${MAIN_URL}movie/${id}${API_KEY}${LANGUAGE}&append_to_response=videos,reviews,credits`,
+    `${MAIN_URL}movie/${id}${API_KEY}${language}&append_to_response=videos,reviews,credits`,
   );
   if (!res.ok) {
     throw new Error('Network response was not ok');
@@ -58,10 +63,11 @@ const fetchMovieId = async ({ queryKey }) => {
 };
 
 const fetchMovieByGenres = async ({ queryKey }) => {
-  const genreId = queryKey[1];
+  const language = `&language=${queryKey[1] ? 'ru-RU' : 'en-EN'}`;
+  const genreId = queryKey[2];
   // ganres - список id жанров через запятую без пробелов
   const res = await fetch(
-    `${MAIN_URL}discover/movie${API_KEY}${LANGUAGE}&with_genres=${genreId}`,
+    `${MAIN_URL}discover/movie${API_KEY}${language}&with_genres=${genreId}`,
   );
   if (!res.ok) {
     throw new Error('Network response was not ok');

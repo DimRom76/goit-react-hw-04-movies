@@ -17,7 +17,7 @@ export default function MovieView({ data }) {
 
   // if (error) return 'An error has occurred: ' + error.message;
 
-  if (data.results.length === 0) return <div>Обзоров еще нет</div>;
+  if (data.results.length === 0) return <div>No reviwes</div>;
 
   return (
     <div>

@@ -19,7 +19,7 @@ export default function VideosView({ data }) {
 
   // if (error) return 'An error has occurred: ' + error.message;
 
-  if (data.results.length === 0) return <div>Трейлеров еще нет</div>;
+  if (data.results.length === 0) return <div>No trailers</div>;
 
   const result = data.results;
 
