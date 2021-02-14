@@ -1,12 +1,5 @@
 import { useQuery } from 'react-query';
-import {
-  useParams,
-  NavLink,
-  Route,
-  useLocation,
-  Link,
-  useRouteMatch,
-} from 'react-router-dom';
+import { useParams, useLocation, Link, useRouteMatch } from 'react-router-dom';
 import { useContext } from 'react';
 
 import Loader from '../components/Loader';
@@ -15,16 +8,17 @@ import fetchApi from '../service/apiService';
 import apiData from '../service/apiData';
 import LanguageContext from '../service/LanguageContext';
 
-import CreditsView from './CreditsViews';
-import ReviewsView from './ReviewsViews';
-import VideosView from './VideosViews';
+import AddInformation from './AddInformation';
+import routes from '../routes';
 
 export default function MovieView() {
   const languageRu = useContext(LanguageContext);
   const { idMovie } = useParams();
   const location = useLocation();
   const match = useRouteMatch();
-  const backPage = location?.state?.backPage ?? '/';
+  //проверям есть ли у location атрибут state затем атрибут backPage,
+  // если это все есть берем из location иначе из routes.home
+  const backPage = location?.state?.backPage ?? routes.home;
 
   const { isLoading, error, data } = useQuery(
     ['movieId', languageRu, idMovie],
@@ -81,57 +75,14 @@ export default function MovieView() {
       </div>
 
       <hr />
-      <div className="addInformation">
-        <p>Дополнительная информация</p>
-        <ul>
-          <li>
-            <NavLink
-              to={{
-                pathname: `${match.url}/credits`,
-                state: { backPage },
-              }}
-            >
-              В главных ролях
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to={{
-                pathname: `${match.url}/reviews`,
-                state: { backPage },
-              }}
-            >
-              Обзоры
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to={{
-                pathname: `${match.url}/videos`,
-                state: { backPage },
-              }}
-            >
-              Трейлеры
-            </NavLink>
-          </li>
-        </ul>
-        <hr />
-        <Route
-          path={`${match.path}/credits`}
-          render={props => <CreditsView {...props} credits={credits} />}
-          //component={CreditsView}
-        />
-        <Route
-          path={`${match.path}/reviews`}
-          render={props => <ReviewsView {...props} data={reviews} />}
-          //component={ReviewsView}
-        />
-        <Route
-          path={`${match.path}/videos`}
-          render={props => <VideosView {...props} data={videos} />}
-          //component={VideosView}
-        />
-      </div>
+
+      <AddInformation
+        backPage={backPage}
+        match={match}
+        credits={credits}
+        reviews={reviews}
+        videos={videos}
+      />
     </div>
   );
 }

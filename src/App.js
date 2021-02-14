@@ -5,6 +5,7 @@ import { lazy, Suspense, useState } from 'react';
 import Navigation from './components/Navigation';
 import Loader from './components/Loader';
 import LanguageContext from './service/LanguageContext';
+import routes from './routes';
 
 import './App.css';
 
@@ -39,10 +40,10 @@ const App = () => {
           <Navigation languageRu={languageRu} setlanguageRu={setlanguageRu} />
           <Suspense fallback={<Loader />}>
             <Switch>
-              <Route path="/" component={HomePage} exact />
-              <Route path="/movies" component={MoviesPage} exact />
-              <Route path="/genres" component={GenresPage} />
-              <Route path="/movies/:idMovie" component={MovieView} />
+              <Route path={routes.home} component={HomePage} exact />
+              <Route path={routes.movies} component={MoviesPage} exact />
+              <Route path={routes.genres} component={GenresPage} />
+              <Route path={routes.moviesDetails} component={MovieView} />
               <Route render={() => <h1>Page not found</h1>} />
             </Switch>
           </Suspense>

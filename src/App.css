@@ -38,3 +38,23 @@
   margin-left: 5px;
   margin-right: 5px;
 }
+
+.actors__list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.actor__li {
+  width: 102px;
+  height: auto;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  list-style-type: none;
+  border: solid 1px grey;
+  border-radius: 13px;
+  text-align: center;
+}
+
+.actor__img {
+  border-radius: 13px 13px 0 0;
+}
